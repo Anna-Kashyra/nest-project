@@ -1,17 +1,25 @@
 import { BaseCustomEntity } from './base.custom.entity';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './user.entity';
 
-export enum PostCategory {
-  TECHNOLOGY = 'Technology',
-  LIFESTYLE = 'Lifestyle',
-  HEALTH = 'Health',
-  FINANCE = 'Finance',
-  ENTERTAINMENT = 'Entertainment',
-}
+// export enum PostCategory {
+//   TECHNOLOGY = 'Technology',
+//   LIFESTYLE = 'Lifestyle',
+//   HEALTH = 'Health',
+//   FINANCE = 'Finance',
+//   ENTERTAINMENT = 'Entertainment',
+// }
 
+@Entity()
 export class Post extends BaseCustomEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column('text', { nullable: false })
   title: string;
@@ -19,15 +27,15 @@ export class Post extends BaseCustomEntity {
   @Column('text', { nullable: false })
   content: string;
 
-  @Column('integer', { nullable: false })
-  authorId: number;
+  @Column()
+  authorId: string;
 
-  @Column({
-    type: 'enum',
-    enum: PostCategory,
-    nullable: true,
-  })
-  category: PostCategory;
+  // @Column({
+  //   type: 'enum',
+  //   enum: PostCategory,
+  //   nullable: true,
+  // })
+  // category: PostCategory;
 
   @Column('jsonb', { nullable: true })
   tags: string[];
@@ -40,4 +48,10 @@ export class Post extends BaseCustomEntity {
 
   @Column('integer', { nullable: true, default: 0 })
   commentsCount: number;
+
+  @ManyToOne(() => User, (entity) => entity.posts, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'authorId' })
+  user?: User;
 }

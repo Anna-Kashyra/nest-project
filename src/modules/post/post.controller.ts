@@ -29,7 +29,7 @@ export class PostController {
     type: BasePostResponseDto,
   })
   @ApiForbiddenResponse({ description: 'Forbidden' })
-  @Post()
+  @Post('/create')
   public async create(
     @Body() dto: BasePostRequestDto,
   ): Promise<BasePostResponseDto> {

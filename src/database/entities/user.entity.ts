@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseCustomEntity } from './base.custom.entity';
+import { Post } from './post.entity';
 
 @Entity()
 export class User extends BaseCustomEntity {
@@ -27,9 +28,15 @@ export class User extends BaseCustomEntity {
   @Column('text', { nullable: true })
   city: string;
 
+  @Column({ nullable: true, default: null })
+  phone: string;
+
   @Column('text', { nullable: true })
   bio: string;
 
   @Column({ default: false })
   isActive: boolean;
+
+  @OneToMany(() => Post, (entity) => entity.user)
+  posts?: Post[];
 }

@@ -15,7 +15,6 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  private usersList = [];
   public async findAll(
     query?: BaseQueryDto,
   ): Promise<PaginatedDto<ShortUserResponseDto>> {
@@ -45,6 +44,7 @@ export class UserService {
     };
   }
 
+  private usersList = [];
   public async findOne(id: number) {
     return await this.usersList.find((user) => user.id == id);
   }

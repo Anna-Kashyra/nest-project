@@ -19,7 +19,6 @@ export class DatabaseService implements TypeOrmOptionsFactory {
       entities: [
         path.join(process.cwd(), 'dist', 'database', 'entities', '*.entity.js'),
       ],
-      // migrations
       synchronize: true,
     };
   }
